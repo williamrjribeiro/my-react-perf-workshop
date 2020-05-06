@@ -1,24 +1,40 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState, useCallback } from 'react';
 import './App.css';
+import {CoolBtn, Header} from './Components';
+import PrimeChecker from "./PrimeChecker";
+
+const PrimeInput = ({ disabled }) => {
+  // Make sure you know which components must re-render when state changes
+  const [number, setNumber] = useState(13);   // <input> <PrimeChecker>
+  const [color, setColor] = useState("red");  // <PrimeChecker> <CoolBtn>
+  const changeHandler = (e) => { setNumber(e.target.value) };
+  const changeColor = () => { setColor(color === "red" ? "green" : "red") };
+  const resetInput = () => { setNumber(1) };
+  
+  return (
+    <>
+      <input className="PrimeInput" type="number" value={number} onChange={changeHandler} max={999} min={1} disabled={disabled} />
+      <PrimeChecker number={number} color={color} />
+      <CoolBtn small onClick={changeColor}>{color}</CoolBtn>
+      <CoolBtn small onClick={resetInput} title="Set input value to 1">Reset</CoolBtn>
+    </>
+  );
+};
 
 function App() {
+  const [disableInput, setDisabled] = useState(false);
+  // useCallback does not have any effect here because the event handler always changes its dependency
+  const handleClick = useCallback(() => { setDisabled(!disableInput) }, [disableInput]);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header />
+
+      <CoolBtn small onClick={handleClick} title="Click to enable or disable the input">
+        {disableInput ? "Disabled" : "Enabled"}
+      </CoolBtn>
+
+      <PrimeInput disabled={disableInput} />
     </div>
   );
 }
