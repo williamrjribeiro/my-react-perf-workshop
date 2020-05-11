@@ -1,6 +1,6 @@
 // Recursive function. It will hurt your CPU!
 const isPrimeNumber = (n, step = n - 1) => {
-    // This console.log call is what kills the performance!!!
+    // This console.log call is what kills the performance with dev tools open!!!
     console.log("[isPrimeNumber]", n);
     if (step <= 1)
         return true;

@@ -1,61 +1,66 @@
 .App {
-  text-align: center;
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  font-size: calc(10px + 2vmin);
-  color: white;
+    text-align: center;
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    font-size: calc(10px + 2vmin);
+    color: white;
 }
 
 .Huge {
-  font-size: 5em
+    font-size: 5em
 }
 
-.Box {
+.InRow {
   display: flex;
-  justify-content: flex-end;
-  align-items: flex-end;
-  position: absolute;
-  background-color: papayawhip;
-  color: slateblue;
-  min-width: 100px;
-  bottom: 1em;
-  left: 1em;
+  flex-direction: row;
+  justify-content: space-evenly;
+  width: 50%;
 }
 
-.CoolBtn{
-  display: inline-block;
-  padding: 0.5em 1em;
-  text-decoration: none;
-  background: #f7f7f7;
-  border-left: solid 6px #ff7c5c;
-  color: #ff7c5c;
-  font-size: 1em;
-  font-weight: bold;
-  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.29);
+.CoolBtn {
+    border-left: solid 6px #ff7c5c;
+    min-width: 80px;
+    display: inline-block;
+    padding: 0.5em 1em;
+    text-decoration: none;
+    background: #f7f7f7;
+    color: #ff7c5c;
+    font-size: 1em;
+    font-weight: bold;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.29);
+    cursor: crosshair;
+    transition: all .5s;
 }
+
+.CoolBtn:hover {
+    background: #ff7c5c;
+    color: #f7f7f7;
+    border-color: #f7f7f7;
+}
+
 .CoolBtn:active {
-  box-shadow: inset 0 0 2px rgba(128, 128, 128, 0.1);
-  transform: translateY(2px);
+    box-shadow: inset 0 0 2px rgba(128, 128, 128, 0.1);
+    transform: translateY(2px);
 }
 
 .CoolBtn--small {
-  font-size: 0.5em;
+    font-size: 0.5em;
 }
 
-.PrimeInput {  
-  background: none;
-  border: none;
-  border-bottom: 1px solid gold;
-  width: 25%;
-  color: gold;
-  font-size: 2em;
+.PrimeInput {
+    background: none;
+    border: none;
+    border-bottom: 1px solid gold;
+    color: gold;
+    font-size: 2em;
+    margin: 1em 0;
 }
 
 .PrimeInput:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+    opacity: 0.5;
+    cursor: not-allowed;
 }
