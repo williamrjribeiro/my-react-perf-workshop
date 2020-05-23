@@ -8,11 +8,11 @@ const ColoredItalic = React.memo(({color, children}) => <em style={{ color }}>{c
 const memoize = (func) => {
   const cache = {};
   return (...args) => {
-    if(cache[arg] === undefined) {
-      cache[arg] = func(...args);
+    if(cache[args] === undefined) {
+      cache[args] = func(...args);
       console.log("[memoize] cache:", cache);
     }
-    return cache[arg];
+    return cache[args];
   };
 }
 
