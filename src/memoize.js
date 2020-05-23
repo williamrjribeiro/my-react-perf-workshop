@@ -1,3 +1,9 @@
+// const memoize = (func) => {
+//     return (arg) => {
+//         return func(arg);
+//     };
+// }
+
 const memoize = (func) => {
     const cache = {};
     return (...args) => {
@@ -10,3 +16,5 @@ const memoize = (func) => {
 };
 
 export default memoize;
+
+// Please use a better implementation: https://lodash.com/docs/4.17.15#memoize

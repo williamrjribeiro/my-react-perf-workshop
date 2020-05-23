@@ -12,8 +12,4 @@ export const CoolBtn = ({children, className: _, small, ...props}) => (
     </button>
 );
 
-export const Header = () => (
-    <>
-        <Huge title="My React Performance Workshop"><Emoji>🏎</Emoji></Huge>
-    </>
-);
+export const Header = () => <Huge title="My React Performance Workshop"><Emoji>🏎</Emoji></Huge>;
