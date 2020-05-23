@@ -111,19 +111,19 @@ const aFunctionOptimized = returnsValue(aFunction) ? useMemo(aFunction, [...]) :
 EXERCIZE: What happens when a state prop is **not** added to the event handler dependency on `useCallback`? Callback does not run and component does not update.
 
 ### Extra: custom memoize isPrime
-That's it in terms of React APIs for manually optimizing component renders. It's indeed a bit dumb that we have to write pumbling to optimize the framework. Not to mention all the code needed for this to work that's shipped to our customers. And still our app is "slow":
+We have covered all of React APIs for manually optimizing component renders. 🎉 It's indeed a bit dumb that we have to write all this pumbling to optimize the framework. And if the code is there, shouldn't it be tested? Not to mention all the code needed for this to work that's shipped to our customers. And still our app is "slow":
 1. focus on input
 1. press key up: calls `isPrime` since number has changed
 1. press key down: calls `isPrime` since number has changed... but we already know the results of these numbers!
 
-Why did it run if we're using `useMemo`?! Because the hook dependency changed: `number`. And that's React how it works. 🤷‍♂️
+Why did it run if we're using `useMemo`?! Because the hook dependency changed: `number`. And that's how React works. 🤷‍♂️
 
 To solve this we need to memoize `isPrime` ourselves. Let's implement a generic utility memoize function just to ilustrate:
 // memoize.js
 
 Now it's awesome! For our contrived example, only this extra optimization would have been enough.
-EXERCIZE: Revert all the optimizations we did and use only our `memoize(isPrime)`.
-Please use a better implementation: https://lodash.com/docs/4.17.15#memoize
+EXERCIZE: Revert all the optimizations we did and use only our `memoize(isPrime)`. Is it enough?
+EXERCIZE: Use a [lodash's implementation](https://lodash.com/docs/4.17.15#memoize). It's safer!
 
 ## Part 3: a more realistic example
 In this example we have the `<Invitations>` component. It will receive a `dealer` as prop that could have been obtained via OIDC.
