@@ -24,56 +24,6 @@ const fetchCustomers = () => new Promise((resolve) => {
     }, 1000);
 });
 
-const DealerHeader = ({ dealer }) => {
-    const [dealerPictureURL, setDealerPictureURL] = useState("");
-    useEffect(() => {
-        fetchDealerPicture(dealer.id).then(setDealerPictureURL);
-    }, []);
-
-    return (
-        <header className="media">
-            <div className="media-left">
-                {
-                    !!dealerPictureURL
-                        ? <img className="media-object" src={dealerPictureURL} alt={`${dealer.name}'s profile`} />
-                        : "Loading profile pic..."
-                }
-            </div>
-            <div>
-                <h1>Hello {dealer.name} 👋</h1>
-            </div>
-        </header>
-    )
-};
-
-const CustomersTable = ({ dealerId }) => {
-    const [hoveredCustomer, setHoveredCustomer] = useState("");
-    const [customers, setCustomers] = useState([]);
-
-    useEffect(() => {
-        fetchCustomers(dealerId).then(setCustomers);
-    }, []);
-
-    const rows = customers.length === 0
-        ? <tr><td>Loading customers...</td></tr>
-        : customers.map((customer) => <HoverRow key={customer.name} customer={customer} />);
-
-    return (
-        <table>
-            <thead className="tableHeader">
-                <tr>
-                    <td>Name</td>
-                    <td>Invitation status</td>
-                    <td>Invitation date</td>
-                </tr>
-            </thead>
-            <tbody>
-                {rows}
-            </tbody>
-        </table>
-    )
-};
-
 const HoverRow = ({ customer }) => {
     const [isHovered, setIsHovered] = useState(false);
     return (
@@ -92,11 +42,45 @@ const HoverRow = ({ customer }) => {
 };
 
 const Invitations = ({ dealer }) => {
+    const [dealerPictureURL, setDealerPictureURL] = useState("");
+    const [customers, setCustomers] = useState([]);
+
+    useEffect(() => {
+        fetchDealerPicture(dealer.id).then(setDealerPictureURL);
+        fetchCustomers(dealer.id).then(setCustomers);
+    }, []);
+
+    const rows = customers.length === 0
+        ? <tr><td>Loading customers...</td></tr>
+        : customers.map((customer) => <HoverRow key={customer.name} customer={customer} />);
+
     return (
         <main className="Invitations">
-            <DealerHeader dealer={dealer} />
+            <header className="media">
+                <div className="media-left">
+                    {
+                        !!dealerPictureURL
+                            ? <img className="media-object" src={dealerPictureURL} alt={`${dealer.name}'s profile`} />
+                            : "Loading profile pic..."
+                    }
+                </div>
+                <div>
+                    <h1>Hello {dealer.name} 👋</h1>
+                </div>
+            </header>
             <section>
-                <CustomersTable dealerId={dealer.id} />
+                <table>
+                    <thead className="tableHeader">
+                        <tr>
+                            <td>Name</td>
+                            <td>Invitation status</td>
+                            <td>Invitation date</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {rows}
+                    </tbody>
+                </table>
             </section>
         </main>
     );

@@ -126,8 +126,27 @@ EXERCIZE: Revert all the optimizations we did and use only our `memoize(isPrime)
 Please use a better implementation: https://lodash.com/docs/4.17.15#memoize
 
 ## Part 3: a more realistic example
-TODO
-TODO
+In this example we have the `<Invitations>` component. It will receive a `dealer` as prop that could have been obtained via OIDC.
+The component will them fetch its profile picture and the list of customers associated with the dealer. It uses 3 states to implement its functionalities and everything is on the same component.
+
+What happens if one of the state props changes? The whole component re-renders! The current performance is terrible: 
+- the row hover effect was not implemented via CSS but in React instead.
+- Waaaaayy to many rows rendered on the page. This is horrible for performance by design...
+
+To drastically improve the performance of this component you don't need any of the advanced techniques I showed before. Only proper componentization will do the trick. Components should take care of their state!
+
+What's the state that changes the most? `hoveredCustomer`. It re-renders and compares every single entry to add or remove the CSS class.
+So let's focus just on this interaction: we don't want to re-render everything when the mouse is over a row, just want to re-render that specific row. And whenever the mouse is out, we remove the class. So every row has to control its own state `isHovered.`
+// Invitations.enough.jsx
+
+EXERCIZE: Make sure the customer table is not re-rendered when the profile picture is loaded.
+
+## Part 3.1: virtualization
+If you really really reaaaaally have to render a huge table/list on the screen, you'll have to use virtualization: instead of rendering hundreds of elements, render just a dozen and re-use them as needed. For that, just use [react-window](https://github.com/bvaughn/react-window)
+TODO/EXERCIZE: use react-window on `<CustomerTable>`
+
+
+## Part 4: useContext() tips
 TODO
 
 ## Part Extra: Measuring perf with Chrome Dev Tools
