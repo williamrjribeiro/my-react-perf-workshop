@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import isPrimeNumber from "./isPrimeNumber";
 import { Huge as origHuge} from './Components';
 
