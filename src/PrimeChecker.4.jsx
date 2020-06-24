@@ -14,7 +14,7 @@ const memoize = (func) => {
     }
     return cache[args];
   };
-}
+};
 
 
 const memoizedIsPrime = memoize(isPrimeNumber); // HOF: it takes a function and returns another function.

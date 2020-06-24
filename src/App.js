@@ -1,24 +1,19 @@
-import React, { useState, useCallback } from 'react';
+import React, {useState} from 'react';
 import './App.css';
-import * as components from './Components';
-import PrimeChecker from "./PrimeChecker.2";
-
-const CoolBtn = React.memo(components.CoolBtn);
-const Header = React.memo(components.Header);
-const InRow = React.memo(components.InRow);
-
-const MemoInput = React.memo((props) => <input className="PrimeInput" type="number" min={1} {...props} />);
+import {CoolBtn, CoolInput, Header, InRow} from './Components';
+import PrimeChecker from "./PrimeChecker";
 
 const PrimeInput = ({ disabled }) => {
   const [number, setNumber] = useState(992);
   const [color, setColor] = useState("red");
-  const onNumberChange = useCallback((e) => { setNumber(e.target.value) }, [setNumber]);
-  const onColorClick = useCallback(() => { setColor(color === "red" ? "green" : "red") }, [color, setColor]);
-  const onResetClick = useCallback(() => { setNumber(1) }, [setNumber]);
+
+  const onNumberChange = (e) => setNumber(e.target.value);
+  const onColorClick = () => setColor(color === "red" ? "green" : "red");
+  const onResetClick = () => setNumber(1);
 
   return (
     <>
-      <MemoInput value={number} onChange={onNumberChange} min={1} disabled={disabled} />
+      <CoolInput value={number} onChange={onNumberChange} min={1} disabled={disabled} />
       <PrimeChecker number={number} color={color} />
       <InRow>
         <CoolBtn small onClick={onColorClick}>{color}</CoolBtn>
@@ -30,7 +25,8 @@ const PrimeInput = ({ disabled }) => {
 
 function App() {
   const [disableInput, setDisabled] = useState(false);
-  const onDisabledClick = useCallback(() => { setDisabled(!disableInput) }, [disableInput]);
+
+  const onDisabledClick = () => setDisabled(!disableInput);
 
   return (
     <div className="App">

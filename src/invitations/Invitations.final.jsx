@@ -28,7 +28,7 @@ const DealerHeader = ({ dealer }) => {
     const [dealerPictureURL, setDealerPictureURL] = useState("");
     useEffect(() => {
         fetchDealerPicture(dealer.id).then(setDealerPictureURL);
-    }, []);
+    }, [dealer.id]);
 
     return (
         <header className="media">
@@ -47,12 +47,11 @@ const DealerHeader = ({ dealer }) => {
 };
 
 const CustomersTable = ({ dealerId }) => {
-    const [hoveredCustomer, setHoveredCustomer] = useState("");
     const [customers, setCustomers] = useState([]);
 
     useEffect(() => {
         fetchCustomers(dealerId).then(setCustomers);
-    }, []);
+    }, [dealerId]);
 
     const rows = customers.length === 0
         ? <tr><td>Loading customers...</td></tr>
@@ -79,7 +78,7 @@ const HoverRow = ({ customer }) => {
     return (
         <tr key={customer.name} className={isHovered ? "hovered" : ""}
             onMouseOver={() => {
-                setIsHovered(true);
+                setIsHovered(true); // useCallback me, maybe?
             }}
             onMouseOut={() => {
                 setIsHovered(false);

@@ -13,3 +13,5 @@ export const CoolBtn = ({children, className: _, small, ...props}) => (
 );
 
 export const Header = () => <Huge title="My React Performance Workshop"><Emoji>🏎</Emoji></Huge>;
+
+export const CoolInput = (props) => <input className="PrimeInput" type="number" min={1} {...props} />;

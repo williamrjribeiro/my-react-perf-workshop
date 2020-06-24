@@ -1,23 +1,28 @@
 import React, { useState, useCallback } from 'react';
 import './App.css';
-import {CoolBtn, Header, InRow} from './Components';
-import PrimeChecker from "./PrimeChecker.3";
+import * as components from './Components';
+import PrimeChecker from "./PrimeChecker.4";
+
+const CoolBtn = React.memo(components.CoolBtn);
+const Header = React.memo(components.Header);
+const InRow = React.memo(components.InRow);
+const CoolInput = React.memo(components.CoolInput);
 
 const PrimeInput = ({ disabled }) => {
-  // Make sure you know which components must re-render when state changes
   const [number, setNumber] = useState(992);
   const [color, setColor] = useState("red");
-  const changeHandler = (e) => { setNumber(e.target.value) };
-  const changeColor = () => { setColor(color === "red" ? "green" : "red") };
-  const resetInput = () => { setNumber(1) };
+
+  const onNumberChange = useCallback((e) => { setNumber(e.target.value) }, [setNumber]);
+  const onColorClick = useCallback(() => { setColor(color === "red" ? "green" : "red") }, [color, setColor]);
+  const onResetClick = useCallback(() => { setNumber(1) }, [setNumber]);
 
   return (
     <>
-      <input className="PrimeInput" type="number" value={number} onChange={changeHandler} min={1} disabled={disabled} />
+      <CoolInput value={number} onChange={onNumberChange} min={1} disabled={disabled} />
       <PrimeChecker number={number} color={color} />
       <InRow>
-        <CoolBtn small onClick={changeColor}>{color}</CoolBtn>
-        <CoolBtn small onClick={resetInput} title="Set input value to 1">Reset</CoolBtn>
+        <CoolBtn small onClick={onColorClick}>{color}</CoolBtn>
+        <CoolBtn small onClick={onResetClick} title="Set input value to 1">Reset</CoolBtn>
       </InRow>
     </>
   );
@@ -25,14 +30,14 @@ const PrimeInput = ({ disabled }) => {
 
 function App() {
   const [disableInput, setDisabled] = useState(false);
-  // useCallback does not have any effect here because the event handler always changes its dependency
-  const handleClick = useCallback(() => { setDisabled(!disableInput) }, [disableInput]);
+
+  const onDisabledClick = useCallback(() => { setDisabled(!disableInput) }, [disableInput]);
 
   return (
     <div className="App">
       <Header />
 
-      <CoolBtn small onClick={handleClick} title="Click to enable or disable the input">
+      <CoolBtn small onClick={onDisabledClick} title="Click to enable or disable the input">
         {disableInput ? "Disabled" : "Enabled"}
       </CoolBtn>
 
