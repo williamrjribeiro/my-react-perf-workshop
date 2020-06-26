@@ -179,7 +179,7 @@ If you really really reaaaaally have to render a huge table/list on the screen, 
 ![List](https://webdev.imgix.net/virtualize-long-lists-react-window/window-diagram.jpg)
 ![Grid](https://webdev.imgix.net/virtualize-long-lists-react-window/window-diagram-grid.jpg)
 
-**EXERCIZE: ** use `react-window` on `<CustomerTable>`
+**EXERCIZE:** use `react-window` on `<CustomerTable>`
 
 ## Part 4: useContext() tips
 Sorry, no time to go through the little tricks and gotchas today. But all the concepts, strategies, and APIs we learned today can be applied.
