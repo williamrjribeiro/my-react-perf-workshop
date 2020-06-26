@@ -9,8 +9,8 @@ Ready to start? Let's go!
 
 ## Part 1
 In front-end web development there are 2 *key* performance indicators, amongst others:
-1. Time to interact: how long does it take until your website loads and is interactive? Load perf.
-1. Fast and smooth: are animations and updates fast enough while the user interacts? Render perf.
+1. **Time to interact:** how long does it take until your website loads and is interactive? Load perf.
+1. **Fast and smooth:** are animations and updates fast enough while the user interacts? Render perf.
 
 React is a framework that provides tools and functionalities for optimizing both. Unfortunately due to time constraints,
 today we're going to focus just on a few React tricks to optimize rendering performance. Maybe in the future, I can do another workshop just with React APIs for improving loading performance.
@@ -78,13 +78,13 @@ Now let's examine the profiling session:
 1. Show `Why did it render?` hover info: color and number.
 1. The color of a bar indicates how long the component (and its children) took to render in the selected commit. `Yellow` components took more time, `blue/teal` components took less time, and `gray` components did not render at all during this commit.
 
-EXERCISE: what re-renders and why when disabling and enabling `<PrimeInput>`?
+**EXERCISE: ** what re-renders and why when disabling and enabling `<PrimeInput>`?
 
 ### Strategies
 Now that we know where all the workload is, we can try a few things to make sure it's fast:
-1. Don't do it in JS: if possible, of course. Not our case yet but we'll cover this later in the workshop.
-1. Optimize the workload: use a better algorithm, tweak current implementation, parallelize, etc...This is not React related so I won't focus on this.
-1. Avoid running workload unnecessarily: React provide a bunch of APIs for dealing exactly with this.
+1. **Don't do it in JS:** if possible, of course. Not our case yet but we'll cover this later in the workshop.
+1. **Optimize the workload:** use a better algorithm, tweak current implementation, parallelize, etc...This is not React related so I won't focus on this.
+1. **Avoid running workload unnecessarily:** React provide a bunch of APIs for dealing exactly with this.
 
 ### First: useMemo(function)
 Function Memoization is a technique for caching results of function calls. It's a common concept and there's a bunch of implementations out there. React's the hook `useMemo`. Pass a “create” function and an array of dependencies. `useMemo` will only recompute the memoized **value** when one of the dependencies has changed. This optimization helps to avoid expensive calculations on every render.
@@ -106,17 +106,17 @@ const MemoBox = React.memo(Box)
 <MemoBox title="memoized box">
 ```
 
-EXERCISE: Use a memoized version of `<PrimeChecker>`
+**EXERCISE: ** Use a memoized version of `<PrimeChecker>`
 *Change just color twice, change number: 0.9ms, 0.3ms, 640ms*
 
-EXERCISE: Use a memoized version of **every** component!
+**EXERCISE: ** Use a memoized version of **every** component!
 Notice that:
 1. When the color changes, nothing from the parent re-renders unnecessarily. =)
 1. When `disabled` prop changes, just `<PrimeChecker>` did not re-render. Even memoized `<CoolBtn>` re-rendered. =(
 
-EXERCISE: Why did `<InRow>` change? Because its children changed and `children` is a prop.
-EXERCISE: Memoize every internal component of `<PrimeChecker>`.
-EXERCISE: Prevent `<InRow>` from re-rendering unnecessarily.
+**EXERCISE: ** Why did `<InRow>` change? Because its children changed and `children` is a prop.
+**EXERCISE: ** Memoize every internal component of `<PrimeChecker>`.
+**EXERCISE: ** Prevent `<InRow>` from re-rendering unnecessarily.
 
 ### Third: useCallback(callback)
 Every time a component renders, it creates a **new** inner function for the event handlers. Since the prop changes, the component re-renders.
@@ -126,12 +126,17 @@ state setter of a component. Since this is so common, React provided a way to ke
 
 ```
 // to get memo version of your function, useMemo if it returns a value or useCallback if it doesn't
-const memo = returnsValue(aFunction) ? useMemo(aFunction, [...]) : useCallback(aFunction, [...])
+let memo;
+if(returnsValue(aFunction)) {
+    memo = useMemo(aFunction, [...]) // memo has a VALUE
+} else {
+    memo = useCallback(aFunction, [...]) // memo has a FUNCTION
+}
 ```
 
 1. `useCallback` every event handler.
 
-EXERCISE: What happens when a state prop is **not** added to the event handler dependency on `useCallback`? What if the state update function is omitted? Callback does not run and the component does not update.
+**EXERCISE: ** What happens when a state prop is **not** added to the event handler dependency on `useCallback`? What if the state update function is omitted? Callback does not run and the component does not update.
 
 [Hooks FAQ has a lot of useful details](https://reactjs.org/docs/hooks-faq.html#what-can-i-do-if-my-effect-dependencies-change-too-often)
 
@@ -144,11 +149,12 @@ We have covered all of React APIs for manually optimizing component renders. �
 Why did it run if we're using `useMemo`?! Because the hook dependency changed: `number`. And that's how React works. 🤷‍♂️
 
 To solve this we need to memoize `isPrime` ourselves. Let's implement a generic utility memoize function just to illustrate:
+
 // memoize.js
 
 Now it's awesome! For our contrived example, only this extra optimization would have been enough.
-EXERCISE: Revert all the optimizations we did and use only our `memoize(isPrime)`. Is it enough?
-EXERCISE: Use a [lodash's implementation](https://lodash.com/docs/4.17.15#memoize). It's safer!
+**EXERCISE: ** Revert all the optimizations we did and use only our `memoize(isPrime)`. Is it enough?
+**EXERCISE: ** Use a [lodash's implementation](https://lodash.com/docs/4.17.15#memoize). It's safer!
 
 ## Part 3: a more realistic example
 In this example, we have the `<Invitations>` component. It gets a `dealer` as prop that could have been obtained via OIDC.
@@ -162,9 +168,10 @@ To drastically improve the performance of this component you don't need any of t
 
 What's the state that changes the most? `hoveredCustomer`. It re-renders and compares every single entry to add or remove the CSS class.
 So let's focus just on this interaction: we don't want to re-render everything when the mouse is over a row, just want to re-render that specific row. And whenever the mouse is out, we remove the class. So every row has to control its own state `isHovered.`
+
 // Invitations.enough.jsx
 
-EXERCISE: Make sure the customer table is not re-rendered when the profile picture is loaded.
+**EXERCISE: ** Make sure the customer table is not re-rendered when the profile picture is loaded.
 
 ## Part 3.1: virtualization
 If you really really reaaaaally have to render a huge table/list on the screen, you'll have to use virtualization: instead of rendering hundreds of elements, render just a dozen needed to fill a viewport and re-use them as needed. For that, just use [react-window](https://github.com/bvaughn/react-window)
@@ -172,7 +179,7 @@ If you really really reaaaaally have to render a huge table/list on the screen, 
 ![List](https://webdev.imgix.net/virtualize-long-lists-react-window/window-diagram.jpg)
 ![Grid](https://webdev.imgix.net/virtualize-long-lists-react-window/window-diagram-grid.jpg)
 
-TODO/EXERCIZE: use react-window on `<CustomerTable>`
+**EXERCIZE: ** use `react-window` on `<CustomerTable>`
 
 ## Part 4: useContext() tips
 Sorry, no time to go through the little tricks and gotchas today. But all the concepts, strategies, and APIs we learned today can be applied.
