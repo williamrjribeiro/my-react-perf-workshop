@@ -268,5 +268,5 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 ### `yarn profile`
 
-Builds the app for production to the `build` folder with profiling capabilities and serves it on [localhost:5000](http://localhost:5000).<br />
+Builds the app for production to the `build` folder with profiling capabilities and serves it on [http://localhost:5000](http://localhost:5000).<br />
 Your app is ready to be profiled with [React Dev Tools](https://reactjs.org/docs/optimizing-performance.html#profiling-components-with-the-devtools-profiler)!
