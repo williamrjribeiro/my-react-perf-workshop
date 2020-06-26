@@ -78,7 +78,7 @@ Now let's examine the profiling session:
 1. Show `Why did it render?` hover info: color and number.
 1. The color of a bar indicates how long the component (and its children) took to render in the selected commit. `Yellow` components took more time, `blue/teal` components took less time, and `gray` components did not render at all during this commit.
 
-**EXERCISE: ** what re-renders and why when disabling and enabling `<PrimeInput>`?
+**EXERCISE:** what re-renders and why when disabling and enabling `<PrimeInput>`?
 
 ### Strategies
 Now that we know where all the workload is, we can try a few things to make sure it's fast:
@@ -106,17 +106,17 @@ const MemoBox = React.memo(Box)
 <MemoBox title="memoized box">
 ```
 
-**EXERCISE: ** Use a memoized version of `<PrimeChecker>`
+**EXERCISE:** Use a memoized version of `<PrimeChecker>`
 *Change just color twice, change number: 0.9ms, 0.3ms, 640ms*
 
-**EXERCISE: ** Use a memoized version of **every** component!
+**EXERCISE:** Use a memoized version of **every** component!
 Notice that:
 1. When the color changes, nothing from the parent re-renders unnecessarily. =)
 1. When `disabled` prop changes, just `<PrimeChecker>` did not re-render. Even memoized `<CoolBtn>` re-rendered. =(
 
-**EXERCISE: ** Why did `<InRow>` change? Because its children changed and `children` is a prop.
-**EXERCISE: ** Memoize every internal component of `<PrimeChecker>`.
-**EXERCISE: ** Prevent `<InRow>` from re-rendering unnecessarily.
+**EXERCISE:** Why did `<InRow>` change? Because its children changed and `children` is a prop.
+**EXERCISE:** Memoize every internal component of `<PrimeChecker>`.
+**EXERCISE:** Prevent `<InRow>` from re-rendering unnecessarily.
 
 ### Third: useCallback(callback)
 Every time a component renders, it creates a **new** inner function for the event handlers. Since the prop changes, the component re-renders.
@@ -136,7 +136,7 @@ if(returnsValue(aFunction)) {
 
 1. `useCallback` every event handler.
 
-**EXERCISE: ** What happens when a state prop is **not** added to the event handler dependency on `useCallback`? What if the state update function is omitted? Callback does not run and the component does not update.
+**EXERCISE:** What happens when a state prop is **not** added to the event handler dependency on `useCallback`? What if the state update function is omitted? Callback does not run and the component does not update.
 
 [Hooks FAQ has a lot of useful details](https://reactjs.org/docs/hooks-faq.html#what-can-i-do-if-my-effect-dependencies-change-too-often)
 
@@ -153,8 +153,8 @@ To solve this we need to memoize `isPrime` ourselves. Let's implement a generic 
 // memoize.js
 
 Now it's awesome! For our contrived example, only this extra optimization would have been enough.
-**EXERCISE: ** Revert all the optimizations we did and use only our `memoize(isPrime)`. Is it enough?
-**EXERCISE: ** Use a [lodash's implementation](https://lodash.com/docs/4.17.15#memoize). It's safer!
+**EXERCISE:** Revert all the optimizations we did and use only our `memoize(isPrime)`. Is it enough?
+**EXERCISE:** Use a [lodash's implementation](https://lodash.com/docs/4.17.15#memoize). It's safer!
 
 ## Part 3: a more realistic example
 In this example, we have the `<Invitations>` component. It gets a `dealer` as prop that could have been obtained via OIDC.
@@ -171,7 +171,7 @@ So let's focus just on this interaction: we don't want to re-render everything w
 
 // Invitations.enough.jsx
 
-**EXERCISE: ** Make sure the customer table is not re-rendered when the profile picture is loaded.
+**EXERCISE:** Make sure the customer table is not re-rendered when the profile picture is loaded.
 
 ## Part 3.1: virtualization
 If you really really reaaaaally have to render a huge table/list on the screen, you'll have to use virtualization: instead of rendering hundreds of elements, render just a dozen needed to fill a viewport and re-use them as needed. For that, just use [react-window](https://github.com/bvaughn/react-window)
