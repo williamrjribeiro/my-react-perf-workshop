@@ -54,15 +54,8 @@ const CustomersTable = React.memo(({ dealerId }) => {
 });
 
 const HoverRow = ({ customer }) => {
-    const [isHovered, setIsHovered] = useState(false);
     return (
-        <tr key={customer.name} className={isHovered ? "hovered" : ""}
-            onMouseOver={() => {
-                setIsHovered(true); // useCallback me, maybe?
-            }}
-            onMouseOut={() => {
-                setIsHovered(false);
-            }}>
+        <tr key={customer.name} className="hoverable">
             <td>{customer.name}</td>
             <td>{customer.status}</td>
             <td>{customer.invitationDate}</td>

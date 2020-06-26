@@ -40,3 +40,7 @@ table {
 .hovered {
     background-color: papayawhip;
 }
+
+.hoverable:hover {
+    background-color: magenta;
+}

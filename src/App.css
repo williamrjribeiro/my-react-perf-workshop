@@ -10,17 +10,6 @@
     color: white;
 }
 
-.Huge {
-    font-size: 5em
-}
-
-.InRow {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  width: 50%;
-}
-
 .CoolBtn {
     border-left: solid 6px #ff7c5c;
     min-width: 80px;
@@ -51,7 +40,7 @@
     font-size: 0.5em;
 }
 
-.PrimeInput {
+.CoolInput {
     background: none;
     border: none;
     border-bottom: 1px solid gold;
@@ -60,7 +49,19 @@
     margin: 1em 0;
 }
 
-.PrimeInput:disabled {
+.CoolInput:disabled {
     opacity: 0.5;
     cursor: not-allowed;
 }
+
+.InRow {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin: 0 auto;
+    width: 50%;
+  }
+  
+  .Huge {
+      font-size: 5em
+  }

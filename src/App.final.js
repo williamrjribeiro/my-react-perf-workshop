@@ -8,27 +8,7 @@ const Header = React.memo(components.Header);
 const InRow = React.memo(components.InRow);
 const CoolInput = React.memo(components.CoolInput);
 
-const PrimeInput = ({ disabled }) => {
-  const [number, setNumber] = useState(992);
-  const [color, setColor] = useState("red");
-
-  const onNumberChange = useCallback((e) => { setNumber(e.target.value) }, [setNumber]);
-  const onColorClick = useCallback(() => { setColor(color === "red" ? "green" : "red") }, [color, setColor]);
-  const onResetClick = useCallback(() => { setNumber(1) }, [setNumber]);
-
-  return (
-    <>
-      <CoolInput value={number} onChange={onNumberChange} min={1} disabled={disabled} />
-      <PrimeChecker number={number} color={color} />
-      <InRow>
-        <CoolBtn small onClick={onColorClick}>{color}</CoolBtn>
-        <CoolBtn small onClick={onResetClick} title="Set input value to 1">Reset</CoolBtn>
-      </InRow>
-    </>
-  );
-};
-
-function App() {
+const App = () => {
   const [disableInput, setDisabled] = useState(false);
 
   const onDisabledClick = useCallback(() => { setDisabled(!disableInput) }, [disableInput]);
@@ -44,6 +24,28 @@ function App() {
       <PrimeInput disabled={disableInput} />
     </div>
   );
-}
+};
+
+const PrimeInput = ({ disabled }) => {
+  const [number, setNumber] = useState(initialNumber);
+  const [color, setColor] = useState("red");
+
+  const onNumberChange = useCallback((e) => { setNumber(e.target.value) }, [setNumber]);
+  const toggleColor = useCallback(() => { setColor(color === "red" ? "green" : "red") }, [color, setColor]);
+  const resetNumber = useCallback(() => { setNumber(initialNumber) }, [setNumber]);
+
+  return (
+    <>
+      <CoolInput value={number} onChange={onNumberChange} min={1} disabled={disabled} />
+      <PrimeChecker number={number} color={color} />
+      <InRow>
+        <CoolBtn small onClick={toggleColor}>{color}</CoolBtn>
+        <CoolBtn small onClick={resetNumber} title="Set input value to 1">Reset</CoolBtn>
+      </InRow>
+    </>
+  );
+};
+
+const initialNumber = 992;
 
 export default App;

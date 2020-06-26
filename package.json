@@ -10,7 +10,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build"
+    "build": "react-scripts build",
+    "profile": "yarn build --profile && npx serve -s build"
   },
   "eslintConfig": {
     "extends": "react-app"

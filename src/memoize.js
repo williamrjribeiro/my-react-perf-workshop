@@ -6,12 +6,12 @@
 
 const memoize = (func) => {
     const cache = {};
-    return (...args) => {
+    return (arg) => {
         //console.log("[memoized func] cache:", Object.keys(cache).length);
-        if (cache[args] === undefined) {
-            cache[args] = func(...args);
+        if (cache[arg] === undefined) {
+            cache[arg] = func(arg);
         }
-        return cache[args];
+        return cache[arg];
     };
 };
 

@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
-import isPrimeNumber from "./isPrimeNumber";
 import { Huge } from './Components';
+import isPrimeNumber from "./isPrimeNumber";
 
 // Call isPrimeNumber only if the `number` prop changes on render
 const PrimeChecker = ({ number, color = "red" }) => {
