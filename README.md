@@ -48,7 +48,7 @@ enough code necessary to profile our apps.
 
 Finally, we can track a number that will reflect the changes that we make in the code. Our goal is that most commits take less than 16ms and right now it's missing waaaaay much.
 
-*Render duration: 2011.4ms*
+*Render duration: 294ms*
 
 Let's try to understand what's causing such horrible performance by inspecting the `Flamegraph chart`. This one tries to mirror our component tree as shown in the `Components` panel: top is our root component and bottom are the leaf components. They also show the hierarchy of components. The time a component takes to render is its own time plus its children's time.
 

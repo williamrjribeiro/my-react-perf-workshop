@@ -24,7 +24,7 @@ const DealerHeader = ({ dealer }) => {
     )
 };
 
-const CustomersTable = React.memo(({ dealerId }) => {
+const CustomersTable = ({ dealerId }) => {
     const [customers, setCustomers] = useState([]);
 
     useEffect(() => {
@@ -51,7 +51,7 @@ const CustomersTable = React.memo(({ dealerId }) => {
         </table>
         </section>
     )
-});
+};
 
 const HoverRow = ({ customer }) => {
     const [isHovered, setIsHovered] = useState(false);

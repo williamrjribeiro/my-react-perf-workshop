@@ -1,7 +1,10 @@
-import React, { useState, useCallback } from 'react';
 import './App.css';
-import * as components from './Components';
-import PrimeChecker from "./PrimeChecker.4";
+
+import * as components from '../Components';
+
+import React, { useCallback, useState } from 'react';
+
+import PrimeChecker from "../PrimeChecker.4";
 
 const CoolBtn = React.memo(components.CoolBtn);
 const Header = React.memo(components.Header);

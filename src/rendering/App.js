@@ -1,12 +1,9 @@
-import React, {useState} from 'react';
 import './App.css';
-import * as components from './Components';
-import PrimeChecker from "./PrimeChecker.2";
 
-const CoolBtn = React.memo(components.CoolBtn);
-const RaceCarHeader = React.memo(components.RaceCarHeader);
-const InRow = React.memo(components.InRow);
-const CoolInput = React.memo(components.CoolInput);
+import {CoolBtn, CoolInput, InRow, RaceCarHeader} from './Components';
+import React, {useCallback, useState} from 'react';
+
+import PrimeChecker from "./PrimeChecker";
 
 const App = () => {
   const [disableInput, setDisabled] = useState(false);
@@ -26,21 +23,28 @@ const App = () => {
   );
 };
 
+const MimePrimeChecker = React.memo(PrimeChecker);
+
+const ResetButton = React.memo(CoolBtn);
+
+//const resetNumber = () => setNumber(initialNumber);
+
 const PrimeInput = ({ disabled }) => {
   const [number, setNumber] = useState(initialNumber);
   const [color, setColor] = useState("red");
 
   const onNumberChange = (e) => setNumber(e.target.value);
-  const toggleColor = () => setColor(color === "red" ? "green" : "red");
-  const resetNumber = () => setNumber(initialNumber);
+  //const toggleColor = () => setColor(color === "red" ? "green" : "red");
+  const toggleColor = useCallback(() => setColor(color === "red" ? "green" : "red"), [color]);
+  const resetNumber = useCallback( () => { setNumber(initialNumber) });
 
   return (
     <div className="PrimeInput">
       <CoolInput value={number} onChange={onNumberChange} min={1} disabled={disabled} />
-      <PrimeChecker number={number} color={color} />
+      <MimePrimeChecker number={number} color={color} />
       <InRow>
         <CoolBtn small onClick={toggleColor}>{color}</CoolBtn>
-        <CoolBtn small onClick={resetNumber} title="Set input value back to its initial value">Reset</CoolBtn>
+        <ResetButton small onClick={resetNumber} title="Set input value back to its initial value">Reset</ResetButton>
       </InRow>
     </div>
   );
