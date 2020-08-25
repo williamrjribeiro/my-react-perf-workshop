@@ -1,10 +1,12 @@
 import './index.css';
 
+// import Rendering from './rendering';
+import Loading from './loading/Loading';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Rendering from './rendering';
 
 ReactDOM.render(
-  <Rendering />,
+  // <Rendering />,
+  <Loading />,
   document.getElementById('root')
 );

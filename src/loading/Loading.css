@@ -1,0 +1,41 @@
+.Modal__close {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.Modal__dialog {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 50%;
+    background-color: white;
+}
+
+.Modal__overlay {
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, .5);
+}
+
+.Modal.Modal--open .Modal__dialog,
+.Modal.Modal--open .Modal__overlay {
+    display: block;
+}
+
+img {
+    min-width: 100%;
+}
+
+.Loading {
+    display: flex;
+    justify-content: space-evenly;
+    max-width: 50%;
+    margin: 0 auto;
+    margin-top: 10%;
+}
