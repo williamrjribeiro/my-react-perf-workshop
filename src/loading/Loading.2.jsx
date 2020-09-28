@@ -1,18 +1,19 @@
 import './Loading.css';
 
-import React, {useState} from 'react';
+import React, { Suspense, useState } from 'react';
 
-import Death from './Death'
-import Gandalf from './Gandalf'
-import Magneto from './Magneto'
 import useEscKey from './useEscKey.hook';
+
+const LazyMagneto = React.lazy(() => import('./Magneto'));
+const LazyGandalf = React.lazy(() => import('./Gandalf'));
+const LazyDeath = React.lazy(() => import('./Death'));
 
 const noop = () => {};
 
-const Modal = ({children, label, disabled, onClose = noop}) => {
+const Modal = ({LazyChildren, label, disabled, onClose = noop}) => {
     const [isOpen, setIsOpen] = useState(false);
     const modalClasses = "Modal" + (isOpen ? " Modal--open" : "");
-    
+
     const openModal = () => setIsOpen(true);
     const closeModal = () => {
         setIsOpen(false);
@@ -30,14 +31,15 @@ const Modal = ({children, label, disabled, onClose = noop}) => {
                     <span className="Modal__overlay"></span>
                     <div className="Modal__dialog" role="dialog">
                         <div className="Modal__close"><button title="Close" onClick={closeModal}>X</button></div>
-                        <div>{children}</div>
+                            <Suspense fallback={<div>loading...</div>}>
+                                <LazyChildren />
+                            </Suspense>
                     </div>
                 </>
             }
         </div>
-    )
+    );
 };
-
 
 const Loading = () => {
     const [choice, setChoice] = useState("");
@@ -45,20 +47,14 @@ const Loading = () => {
 
     return (
         <>
-            { !choice && <h1>Your destiny awaits. Choose wisely</h1> }
-            { choice && <h1>{choice} it is!</h1> }
+            { !choice && <h1>Your destiny awaits. Choose wisely</h1>}
+            { choice && <h1>{choice} it is!</h1>}
             <div className="Loading">
-                <Modal label={choice ? "Magneto" : "???"} onClose={onModalClose("Magneto")} disabled={!!choice}>
-                    <Magneto />
-                </Modal>
+                <Modal label={choice ? "Magneto" : "???"} onClose={onModalClose("Magneto")} disabled={!!choice} LazyChildren={LazyMagneto} />
 
-                <Modal label={choice ? "Gandalf" : "???"} onClose={onModalClose("Gandalf")} disabled={!!choice}>
-                    <Gandalf />
-                </Modal>
+                <Modal label={choice ? "Gandalf" : "???"} onClose={onModalClose("Gandalf")} disabled={!!choice} LazyChildren={LazyGandalf} />
 
-                <Modal label={choice ? "Death" : "???"} onClose={onModalClose("Death")} disabled={!!choice}>
-                    <Death />
-                </Modal>
+                <Modal label={choice ? "Death" : "???"} onClose={onModalClose("Death")} disabled={!!choice} LazyChildren={LazyDeath} />
             </div>
         </>
     );

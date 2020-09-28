@@ -1,3 +1,7 @@
+body {
+    text-align: center;
+}
+
 .Modal__close {
     display: flex;
     flex-direction: row-reverse;
@@ -23,6 +27,8 @@
     background-color: rgba(0, 0, 0, .5);
 }
 
+.Modal2 .Modal__dialog,
+.Modal2 .Modal__overlay,
 .Modal.Modal--open .Modal__dialog,
 .Modal.Modal--open .Modal__overlay {
     display: block;
@@ -38,4 +44,9 @@ img {
     max-width: 50%;
     margin: 0 auto;
     margin-top: 10%;
+}
+
+button[disabled] {
+    cursor: not-allowed;
+    user-select: none;
 }

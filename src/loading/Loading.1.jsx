@@ -1,25 +1,37 @@
 import './Loading.css';
 
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 
-import Death from './Death'
-import Gandalf from './Gandalf'
-import Magneto from './Magneto'
 import useEscKey from './useEscKey.hook';
 
 const noop = () => {};
 
-const Modal = ({children, label, disabled, onClose = noop}) => {
+const Modal = ({ defaultComponentPath, label, disabled, onClose = noop }) => {
     const [isOpen, setIsOpen] = useState(false);
+    const [child, setChild] = useState(null);
     const modalClasses = "Modal" + (isOpen ? " Modal--open" : "");
-    
-    const openModal = () => setIsOpen(true);
+
+    const openModal = () => {
+        setIsOpen(true);
+        loadModule()
+    };
+
     const closeModal = () => {
         setIsOpen(false);
         onClose();
     };
 
     useEscKey(closeModal, isOpen);
+
+    const loadModule = async () => {
+        const { default: Module } = await import(
+            /* webpackChunkName: "lazy-ian" */
+            /* webpackMode: "lazy-once" */
+            `${defaultComponentPath}`
+        ); // same as const Module = await import(`${defaultComponentPath}`).default
+        console.log("Children loaded:", Module.name);
+        setChild(Module());
+    };
 
     return (
         <div className={modalClasses}>
@@ -30,14 +42,13 @@ const Modal = ({children, label, disabled, onClose = noop}) => {
                     <span className="Modal__overlay"></span>
                     <div className="Modal__dialog" role="dialog">
                         <div className="Modal__close"><button title="Close" onClick={closeModal}>X</button></div>
-                        <div>{children}</div>
+                        <div>{child ? child : "loading..."}</div>
                     </div>
                 </>
             }
         </div>
     )
 };
-
 
 const Loading = () => {
     const [choice, setChoice] = useState("");
@@ -48,17 +59,11 @@ const Loading = () => {
             { !choice && <h1>Your destiny awaits. Choose wisely</h1> }
             { choice && <h1>{choice} it is!</h1> }
             <div className="Loading">
-                <Modal label={choice ? "Magneto" : "???"} onClose={onModalClose("Magneto")} disabled={!!choice}>
-                    <Magneto />
-                </Modal>
+                <Modal label={choice ? "Magneto" : "???"} onClose={onModalClose("Magneto")} defaultComponentPath="./Magneto" disabled={!!choice} />
 
-                <Modal label={choice ? "Gandalf" : "???"} onClose={onModalClose("Gandalf")} disabled={!!choice}>
-                    <Gandalf />
-                </Modal>
+                <Modal label={choice ? "Gandalf" : "???"} onClose={onModalClose("Gandalf")} defaultComponentPath="./Gandalf" disabled={!!choice} />
 
-                <Modal label={choice ? "Death" : "???"} onClose={onModalClose("Death")} disabled={!!choice}>
-                    <Death />
-                </Modal>
+                <Modal label={choice ? "Death" : "???"} onClose={onModalClose("Death")} defaultComponentPath="./Death" disabled={!!choice} />
             </div>
         </>
     );
