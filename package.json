@@ -6,9 +6,11 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1",
+    "source-map-explorer": "^2.5.0",
     "stats.js": "^0.17.0"
   },
   "scripts": {
+    "analyze": "source-map-explorer 'build/static/js/*.js'",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "profile": "yarn build --profile && npx serve -s build"
