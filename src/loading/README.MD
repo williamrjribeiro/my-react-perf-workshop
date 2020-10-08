@@ -26,10 +26,7 @@ No dedicated hardware acceleration for JS.
 
 Specially considering mobile phones and celular networks. The great majority of people in the world use low-cost phones on a 3G network. Therefore, if your site/webapp is trully global, you have to work extra hard to make sure every one has a great experience.
 
-Today we're going to focus on a narrow set of problems and some techniques on how to avoid them using React.
-
-1. **Lazy load needed components**
-1. **Ship modern JavaScript bundles**
+Today we're going to focus on just one technique which is lazy loading code.
 
 ## Lazy load needed components
 May the fun start and let's dive into some code now! I used `CRA` to bootstrap this very simple React app that has 3 misterious buttons that when clicked opens up a modal with an image. Only one modal can be opened! The `<Modal>` component deals with all modal things and renders the given children inside the modal when it's open. The only problem is that the components that render the images are huge:
@@ -93,5 +90,3 @@ Once we refactor our code, it looks more declarative and cleaner since all the b
 * Initial load: `504kb` transfered, Load: `1.61s` (Fast 3G)
 
 Another bonus is that this API is already compatible with React's `ErrorBoundary`. Our boiler plate code had no error handling...
-
-## Ship modern JavaScript bundles
