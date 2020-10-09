@@ -1,4 +1,4 @@
-# My React Perf Workshop
+# Rendering Performance Tweaks
 
 ```
 WARNING: This app can crash your browser and make your computer unresponsive!
