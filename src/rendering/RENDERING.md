@@ -3,17 +3,8 @@
 ```
 WARNING: This app can crash your browser and make your computer unresponsive!
 ```
-This is not a workshop for beginners in React but not for experts either. Hopefully, after this workshop, you'll be introduced to some intermediate knowledge.
 
-Ready to start? Let's go!
-
-## Part 1
-In front-end web development there are 2 *key* performance indicators, amongst others:
-1. **Time to interact:** how long does it take until your website loads and is interactive? Load perf.
-1. **Fast and smooth:** are animations and updates fast enough while the user interacts? Render perf.
-
-React is a framework that provides tools and functionalities for optimizing both. Unfortunately due to time constraints,
-today we're going to focus just on a few React tricks to optimize rendering performance. Maybe in the future, I can do another workshop just with React APIs for improving loading performance.
+In this part we're going to focus just on a few React tricks to optimize rendering performance.
 
 ### Defining a performance goal.
 If you don't have a goal, or a minimum required FPS, then it's just guesswork. This goal will dictate the efforts your

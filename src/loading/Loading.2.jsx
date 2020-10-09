@@ -4,9 +4,12 @@ import React, { Suspense, useState } from 'react';
 
 import useEscKey from './useEscKey.hook';
 
-const LazyMagneto = React.lazy(() => import('./Magneto'));
-const LazyGandalf = React.lazy(() => import('./Gandalf'));
-const LazyDeath = React.lazy(() => import('./Death'));
+const LazyMagneto = React.lazy(() => import(/* webpackChunkName: "lazy-ian" */
+/* webpackMode: "lazy-once" */'./Magneto'));
+const LazyGandalf = React.lazy(() => import(/* webpackChunkName: "lazy-ian" */
+/* webpackMode: "lazy-once" */'./Gandalf'));
+const LazyDeath = React.lazy(() => import(/* webpackChunkName: "lazy-ian" */
+/* webpackMode: "lazy-once" */'./Death'));
 
 const noop = () => {};
 

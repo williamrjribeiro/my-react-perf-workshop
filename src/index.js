@@ -1,11 +1,11 @@
 import './index.css';
 
-//import MyErrorBoundary from './loading/MyErrorBoundary'
-import Loading from './loading/Loading';
+import Loading from './loading/Loading.2';
+import MyErrorBoundary from './loading/MyErrorBoundary'
 import React from 'react';
 import ReactDOM from 'react-dom';
 
 ReactDOM.render(
-  <Loading />,
+  <MyErrorBoundary><Loading /></MyErrorBoundary>,
   document.getElementById('root')
 );

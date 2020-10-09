@@ -60,7 +60,6 @@ Which means that the production `main.js` is considerably large: `1.08 MB`. And 
 So the path forward is clear: stop loading all images and lazy load just the one that is needed when needed.
 
 ### Native dynamic imports
-[INTRO]
 I usually start with the API. I would like the Modal component to load a given component by its source path:
 
 ```
@@ -83,7 +82,11 @@ It takes a path to a file and returns a `Promise`. The promise is resolved once 
 const lazyModule = await import("./module");
 ```
 
-Now we just need to instanciate the lazy module and update the component state. Uh oh! There's some caveats with dynamic imports. The build system must know ahead of time, during compilation, what are the dynamic loaded assets or else it can't export the chunks correctly. Right now, the Modal component is a complete black-box for the build system because the `defaultComponentPath` prop is obscuring the path. Probably this is a limitation that they can overcome with updates to Webpack but for now we have to get rid of the black-box.
+Now we just need to instanciate the lazy module and update the component state. 
+
+Uh oh! 
+
+There's some caveats with dynamic imports. The build system must know ahead of time, during compilation, what are the dynamic loaded assets or else it can't export the chunks correctly. Right now, the Modal component is a complete black-box for the build system because the `defaultComponentPath` prop is obscuring the path. Probably this is a limitation that they can overcome with updates to Webpack but for now we have to get rid of the black-box.
 
 The trick is to place the prop in an expression. This triggers Webpack to evaluate correctly at build time.
 
@@ -112,7 +115,7 @@ After:
 const OtherComponent = React.lazy(() => import('./OtherComponent'));
 ```
 
-This will automatically load the bundle containing the `OtherComponent` when it is first rendered.
+This will automatically load the bundle containing the `OtherComponent` when it is first **rendered**.
 
 Then, the lazy component should be rendered inside a `Suspense` component, which allows us to show some fallback content (such as a loading indicator) while we’re waiting for the lazy component to load.
 
@@ -120,7 +123,7 @@ Once we refactor our code, it looks more declarative and cleaner since all the b
 1. Create lazy components: `LazyDeath`, `LazyGandalf` & `LazyMagneto`
 1. Replace prop `defaultComponentPath` with `children`
 1. Remove the `lazyChildren` state and `loadModule` function and calls
-1. Render the `children` in `<Suspense>` with a `loading...` fallback.
+1. Render the `children` in `<Suspense>` with a `<div>loading...</div>` fallback.
 1. Pass the lazy children to the modals in the `<Loading>` component.
 
 TA DAAAH! All is working again and the chunks are loaded correctly. If we rebuild our app we can check the size differences.
@@ -132,10 +135,15 @@ Another bonus is that this API is already compatible with React's `ErrorBoundary
 
 ### Extra: webpack tips
 CRA uses webpack to bundle our app so we can take advantage of its [ES6 Import Magic Comments](https://webpack.js.org/api/module-methods/#magic-comments) to help us track and fine tune the generated chunks.
-* /* webpackChunkName: "lazy-ian" */ : all chunks related to the lazy imports have the same name
-* /* webpackMode: "lazy-once" */ : bundles all the 3 lazy children into a single chunk (??)
 
-### Extra: [Webpack Libs Optimization tips](https://github.com/GoogleChromeLabs/webpack-libs-optimizations#babel-polyfill)
+For instance, to name a chunk, add `/* webpackChunkName: "CHUNK_NAME" */` inside the `import()` call and it will name the chunk accordingly.
+
+Also check [Webpack Libs Optimization tips.](https://github.com/GoogleChromeLabs/webpack-libs-optimizations#babel-polyfill)
+
+## CHALLENGE: EAGER LOADING
+Try to implement these
+1. Whenever the mouse cursor hovers the modal trigger button, eager load the Ian module.
+1. Whenever the app is idle, eager load all Ian modules.
 
 ## Extra: movie references
 * [Death appears on Last Action Hero (1993)](https://www.imdb.com/title/tt0107362/?ref_=ttmi_tt)
