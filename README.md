@@ -5,8 +5,8 @@ In front-end web development there are 2 *key* performance indicators, amongst o
 1. **Time to interact:** how long does it take until your website loads and is interactive? Load perf.
 
 React is a framework that provides tools and functionalities for optimizing both. This workshop has one part for each topic:
-1. [Rendering](/src/rendering)
-1. [Loading](/src/loading)
+1. [Rendering](/src/rendering/RENDERING.md)
+1. [Loading](/src/loading/LOADING.MD)
 
 Both topics are unrelated and independent so they can be done in any order.
 
